@@ -16,24 +16,24 @@ import sys
 
 
 class TestThreadPoolPerformance(TestBase):
-	
+
 	max_threads = cpu_count()
-	
+
 	def test_base(self):
 		# create a dependency network, and see how the performance changes
 		# when adjusting the amount of threads
 		pool = ThreadPool(0)
 		ni = 1000				# number of items to process
-		print self.max_threads
+		print(self.max_threads)
 		for num_threads in range(self.max_threads*2 + 1):
 			pool.set_size(num_threads)
 			for num_transformers in (1, 5, 10):
 				for read_mode in range(2):
-					ts, rcs = add_task_chain(pool, ni, count=num_transformers, 
-												feedercls=IteratorThreadTask, 
-												transformercls=TestPerformanceThreadTask, 
+					ts, rcs = add_task_chain(pool, ni, count=num_transformers,
+												feedercls=IteratorThreadTask,
+												transformercls=TestPerformanceThreadTask,
 												include_verifier=False)
-					
+
 					mode_info = "read(0)"
 					if read_mode == 1:
 						mode_info = "read(1) * %i" % ni
