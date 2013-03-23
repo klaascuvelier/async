@@ -9,7 +9,7 @@ def _init_atexit():
 	"""Setup an at-exit job to be sure our workers are shutdown correctly before
 	the interpreter quits"""
 	import atexit
-	import threading
+	import thread
 	atexit.register(thread.do_terminate_threads)
 
 def _init_signals():
